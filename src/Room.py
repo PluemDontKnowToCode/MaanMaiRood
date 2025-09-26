@@ -1,17 +1,28 @@
 class Room:
-    def __init__(self, guest, number):
-        self.__guest = guest
+
+    number_offset = 0
+
+    def __init__(self, channel, number):
+        #format No. : car No. : boat No. : mannual
+        self.__channel = channel
         self.__number = number
 
     @property
-    def guest(self): return self.__guest
+    def number(self): return self.__number + Room.number_offset
+    
+    def __str__(self):
+        #room format
+        return f"{self.__number}_{self.__channel}"
+    
+    def __lt__(self, other):
+        return self.number < other.number
 
-    @property
-    def number(self): return self.__number
+    def __gt__(self, other):
+        return self.number > other.number
 
-    @guest.setter
-    def guest(self, value):
-        self.__guest = value
-
-    def isEmpty(self):
-        return self.guest is None
+    def __eq__(self, other):
+        return self.number == other.number
+    
+    @classmethod
+    def increase_all_number(cls, amount):
+        cls.number_offset += amount

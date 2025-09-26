@@ -5,9 +5,9 @@ class Stack:
         else:
             self.items = []
     
-    def push(self, value):
-        if not value is None:
-            self.items.append(value)
+    def push(self, data):
+        if not data is None:
+            self.items.append(data)
         return
     
     def pop(self):
