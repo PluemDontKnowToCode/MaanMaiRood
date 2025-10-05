@@ -13,8 +13,8 @@ class Hotel:
     def insert(self, channels):
         #temporaly
         passengers , cars , boats, walkins = channels
-        Room.increase_all_number(passengers * cars * boats + walkins)
-        # room_count = 0 - self.last_room
+        # Room.increase_all_number(passengers * cars * boats + walkins)
+        room_count = 0 
         for boat in range(1, boats + 1):
             for car in range(1 , cars + 1):
                 for passenger in range(1, passengers + 1):
@@ -34,7 +34,8 @@ class Hotel:
         return
     
     def update_room_number(self, amount):
-        Room.increase_all_number(amount)
+        #change algorithm
+        # Room.increase_all_number(amount)
         return
     
     #For requirement 4

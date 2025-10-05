@@ -16,32 +16,23 @@ class Room:
     
     def __lt__(self, other):
         if isinstance(other, Room):
-            print("compere by Room")
             return self.number < other.number
         elif isinstance(other, int):
-            print("compere by int")
             return self.number < other
-        print("Cannot compare Room with other type")
         return False
 
     def __gt__(self, other):
         if isinstance(other, Room):
-            print("compere by Room")
             return self.number > other.number
         elif isinstance(other, int):
-            print("compere by int")
             return self.number > other
-        print("Cannot compare Room with other type")
         return False
 
     def __eq__(self, other):
         if isinstance(other, Room):
-            print("compere by Room")
             return self.number == other.number
         elif isinstance(other, int):
-            print("compere by int")
             return self.number == other
-        print("Cannot compare Room with other type")
         return False
     
     def __int__(self):
