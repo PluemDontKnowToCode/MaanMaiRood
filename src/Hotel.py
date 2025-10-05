@@ -1,6 +1,6 @@
 
 from Structure.AVLTree import AVLTree
-from Help.track import *
+from Helper.track import *
 from Room import Room
 class Hotel:
     def __init__(self):
@@ -12,8 +12,22 @@ class Hotel:
     @track
     def insert(self, channels):
         #temporaly
-        car , boat, helicopter, plane = channels
+        passengers , cars , boats, walkins = channels
+        Room.increase_all_number(passengers * cars * boats + walkins)
+        # room_count = 0 - self.last_room
+        for boat in range(1, boats + 1):
+            for car in range(1 , cars + 1):
+                for passenger in range(1, passengers + 1):
+                    room_count += 1
+                    self.tree.add(Room(f"{passenger}_{car}_{boat}_0", room_count))
+
+        for walkin in range(1, walkins + 1):
+            room_count += 1
+            self.tree.add(Room(f"0_0_0_{walkin}",room_count))
+        # self.last_room += room_count
         return
+    
+    # def add_room(self, ):
     #For requirement 2
     @track
     def assign_room(self, channel):
@@ -31,7 +45,7 @@ class Hotel:
     #For requirement 5
     @track
     def manual_remove(self, room_number):
-        self.tree.remove(room_number)
+        self.tree.remove(int(room_number))
         return
     
     @track
@@ -47,7 +61,11 @@ class Hotel:
     #For requirement 11
     @track
     def export_to_csv(self):
+        all_room = self.get_all_available_room()
+
         return
+    def printTree(self):
+        self.tree.printTree()
     
 
     

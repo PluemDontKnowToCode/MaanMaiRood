@@ -29,13 +29,11 @@ class AVLTree:
     def _add(self, root, data):
         if root is None:
             return AVLNode(data)
-        
+        if int(data) < int(root.data):
+            root.left = self._add(root.left, data)
         else:
-            if int(data) < int(root.data):
-                root.left = self._add(root.left, data)
-            else:
-                root.right = self._add(root.right, data)
-            root = self.rebalance(root)
+            root.right = self._add(root.right, data)
+        root = self.rebalance(root)
         return root
 
     def rebalance(self, x):
@@ -70,13 +68,15 @@ class AVLTree:
         y.setHeight()
         return y
 
-    def printTree(self, node, level = 0):
+    def _printTree(self, node, level = 0):
         if node != None:
-            self.printTree(node.right, level + 1)
-            # print(' ',end="")
-            s = '    ' * level
-            print(f"{s}{node}")
-            self.printTree(node.left, level + 1)
+            self._printTree(node.left, level + 1)
+            print(f"{node}")
+            self._printTree(node.right, level + 1)
+
+    def printTree(self):
+        self._printTree(self.root)
+        
     def compare(self, node1, node2):
         if node1 is None and node2 is None:
             return True
@@ -92,15 +92,18 @@ class AVLTree:
     def remove(self, data):
         self.root = self._remove(self.root, data)
 
-    def _remove(self,node, data):
+    def _remove(self, node, data):
         if node is None:
             return None
-        if node.data == data:
+        if data < node.data:
+            node.left = self._remove(node.left, data)
+        elif data > node.data:
+            node.right = self._remove(node.right, data)
+        else:
             if node.left is None:
                 return node.right
             elif node.right is None:
                 return node.left
-            
             temp = self.get_successer(node.right)
             node.data = temp.data
             node.right = self._remove(node.right, temp.data)

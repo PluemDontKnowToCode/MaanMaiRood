@@ -23,7 +23,7 @@ def track(func):
         memoryAfter = get_process_memory()
         endTime = time() - startTime
         memUsed = memoryAfter - memoryBefore
-
+        print()
         print(f"{func.__name__} memory used stat")
         print(f"memory before: {memoryBefore:,} bytes")
         print(f"memory after: {memoryAfter:,} bytes")
