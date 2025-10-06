@@ -1,41 +1,68 @@
 import pandas as pd
-# from flask import Flask,Response
-# import webbrowser
-# import threading
 
-# file_csv = []
+from flask import Flask,Response,request
+import webbrowser
+import threading
+import requests
 
-# app = Flask(__name__)
 
-# @app.route('/')
-# def download_csv():
+file_csv = []
+
+app = Flask(__name__)
+
+@app.route('/shutdown', methods=['GET'])
+def shutdown():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func:
+        func()
+    return "Server shutting down..."
+
+@app.route('/')
+def download_csv():
     
-#     global file_csv
+    global file_csv
 
-#     file_csv = pd.DataFrame(
-#         file_csv, # Hotel list
-#         columns=[
-#         'Name',
-#         'Room',
-#         'Log'
-#         ]
-#                         )
-
-#     return Response(
-#             iter([file_csv.to_csv(index=False)]),
-#             mimetype="text/csv",
-#             headers={"Content-Disposition": "attachment; filename=Hotel_Room.csv"}
-#         )
-
-def auto_download(data):
-    df =  pd.DataFrame(
-        data, # Hotel list
+    file_csv = pd.DataFrame(
+        file_csv, # Hotel list
         columns=[
         'Name',
         'Room',
         'Log'
-        ])
-    df.to_csv("Hotel_Room.csv", index=False, encoding='utf-8-sig')
+        ]
+                        )
+    
+    threading.Timer(0.1,lambda: requests.get("http://127.0.0.1:5000/shutdown")).start()
+
+    return Response(
+            iter([file_csv.to_csv(index=False)]),
+            mimetype="text/csv",
+            headers={"Content-Disposition": "attachment; filename=Hotel_Room.csv"}
+        )
+
+
+def auto_open_browser():
+    webbrowser.open("http://127.0.0.1:5000/")
+
+def auto_download(data):
+    global file_csv
+    file_csv = data
+
+    threading.Timer(0.1, auto_open_browser).start()
+    app.run(port=5000, debug=False)
+
+
+#------------------------------------------------------------------
+
+
+# def auto_download(data):
+#     df =  pd.DataFrame(
+#         data, # Hotel list
+#         columns=[
+#         'Name',
+#         'Room',
+#         'Log'
+#         ])
+#     df.to_csv("Hotel_Room.csv", index=False, encoding='utf-8-sig')
     
 
 if __name__ == "__main__":
