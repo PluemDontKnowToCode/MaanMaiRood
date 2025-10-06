@@ -2,6 +2,7 @@
 from Structure.AVLTree import AVLTree
 from Helper.track import *
 from Room import Room
+from Download_csv import *
 class Hotel:
     def __init__(self):
         self.tree = AVLTree()
@@ -51,7 +52,14 @@ class Hotel:
     
     @track
     def get_all_available_room(self):
-        return
+        # Create CSV data in memory
+        data = [
+            ["Alice", 30, "New York"],
+            ["Bob", 24, "London"],
+            ["Charlie", 35, "Paris"]
+        ]
+
+        return data
     
 
     #For requirement 7
@@ -63,6 +71,7 @@ class Hotel:
     @track
     def export_to_csv(self):
         all_room = self.get_all_available_room()
+        auto_download(all_room)
 
         return
     def printTree(self):
