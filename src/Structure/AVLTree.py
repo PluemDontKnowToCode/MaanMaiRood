@@ -124,14 +124,16 @@ class AVLTree:
             if focus.right is not None:
                 self.preorder(focus.right ,List)
         return List
-    
-    def inorder(self, focus, List):
+    def inorder(self):
+        op = []
+        return self._inorder(self.root, op)
+    def _inorder(self, focus, List):
         # Left → Root → Right
         if focus.left is not None:
-            self.inorder(focus.left, List)
+            self._inorder(focus.left, List)
         List.append(focus.data)
         if focus.right is not None:
-            self.inorder(focus.right, List)
+            self._inorder(focus.right, List)
         return List
     
     def postorder(self, focus, List):
@@ -152,7 +154,7 @@ class AVLTree:
         
         if node.data == data:
             return node
-        if node.left.data > data:
+        if node.data > data:
             return self._search(node.left, data)
         else:
             return self._search(node.right, data)

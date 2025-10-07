@@ -53,12 +53,7 @@ class Hotel:
     @track
     def get_all_available_room(self):
         # Create CSV data in memory
-        data = [
-            ["Alice", 30, "New York"],
-            ["Bob", 24, "London"],
-            ["Charlie", 35, "Paris"]
-        ]
-
+        data = self.tree.inorder()
         return data
     
 
@@ -70,13 +65,19 @@ class Hotel:
     #For requirement 11
     @track
     def export_to_csv(self):
-        all_room = self.get_all_available_room()
-        auto_download(all_room)
+        self.getCSV()
+        # all_room = self.get_all_available_room()
+        # auto_download(all_room)
 
         return
     def printTree(self):
         self.tree.printTree()
     
+    def getCSV(self):
+        data = self.tree.inorder()
 
+        with open("fruits.csv", "w") as f:
+            for item in data:
+                f.write(str(item) + "\n")
     
     
