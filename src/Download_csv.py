@@ -4,7 +4,7 @@ from flask import Flask,Response,request
 import webbrowser
 import threading
 import requests
-
+import time
 
 file_csv = []
 
@@ -41,14 +41,26 @@ def download_csv():
 
 
 def auto_open_browser():
+    time.sleep(0.2) 
     webbrowser.open("http://127.0.0.1:5000/")
+
+def run_flask():
+    app.run(port=5000, debug=False, use_reloader=False)
 
 def auto_download(data):
     global file_csv
     file_csv = data
 
-    threading.Timer(0.1, auto_open_browser).start()
-    app.run(port=5000, debug=False)
+    flask_thread = threading.Thread(target=run_flask, daemon=True)
+    flask_thread    .start()
+   
+    threading.Thread(target=auto_open_browser, daemon=True).start()
+    
+    start_time = time.time()
+    while flask_thread.is_alive():
+        if time.time() - start_time > 1:  # กันเผื่อกรณี error
+            break
+        time.sleep(0.5)
 
 
 #------------------------------------------------------------------
