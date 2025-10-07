@@ -27,7 +27,7 @@ def main():
         "Manully check-out guests",
         "Search room",
         "Export to CSV file",
-        "Print Tree"
+        "Print All Room"
     ]
     print(BANNER)
     while True:
