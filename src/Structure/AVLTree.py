@@ -158,3 +158,15 @@ class AVLTree:
             return self._search(node.left, data)
         else:
             return self._search(node.right, data)
+        
+    def update(self, value):
+        self._update(self.root, value)
+
+    def _update(self, focus, value):
+        if focus is None:
+            return None
+        if focus.left is not None:
+            self._update(focus.left, value)
+        focus.data.number += value
+        if focus.right is not None:
+            self._update(focus.right, value)

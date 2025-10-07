@@ -25,7 +25,6 @@ def main():
         "Check-in guests by channel",
         "Manully check-in guests",
         "Manully check-out guests",
-        "Rearrange room number",
         "Search room",
         "Export to CSV file",
         "Print Tree"
@@ -62,16 +61,16 @@ def main():
                 inp = int(input("Enter room number : "))
                 hotel.manual_remove(room_number=inp)
                 pass
-            case 4: #rearrange room
-                pass
-            case 5: #search room
+            # case 4: #rearrange room
+            #     pass
+            case 4: #search room
                 inp = int(input("Enter room number : "))
                 print(hotel.search(room_number=inp))
                 pass
-            case 6: #export to csv
+            case 5: #export to csv
                 hotel.export_to_csv()
                 pass
-            case 7: #print tree
+            case 6: #print tree
                 hotel.printTree()
                 pass
             case _:

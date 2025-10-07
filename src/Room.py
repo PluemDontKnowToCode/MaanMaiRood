@@ -10,6 +10,10 @@ class Room:
     @property
     def number(self): return self.__number + Room.number_offset
     
+    @number.setter
+    def number(self, value):
+        self.__number = value
+
     def __str__(self):
         #room format
         return f"Room {self.__number} : {self.__channel}"
