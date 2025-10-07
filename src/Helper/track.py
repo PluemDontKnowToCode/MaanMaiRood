@@ -24,10 +24,13 @@ def track(func):
         endTime = time() - startTime
         memUsed = memoryAfter - memoryBefore
         print()
-        print(f"{func.__name__} memory used stat")
+        print("=============memory used stat==============")
+        print(f"Function : {func.__name__}")
         print(f"memory before: {memoryBefore:,} bytes")
         print(f"memory after: {memoryAfter:,} bytes")
         print(f"memory consumed: {memUsed:,} bytes")
         print(f"function execution time : {endTime} seconds")
+        print("===========================================")
+        print()
         return result
     return wrapper

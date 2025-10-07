@@ -12,7 +12,7 @@ class Room:
     
     def __str__(self):
         #room format
-        return f"{self.__number}_{self.__channel}"
+        return f"Room {self.__number} : {self.__channel}"
     
     def __lt__(self, other):
         if isinstance(other, Room):
@@ -37,6 +37,7 @@ class Room:
     
     def __int__(self):
         return int(self.number)
+    
     @classmethod
     def increase_all_number(cls, amount):
         cls.number_offset += amount

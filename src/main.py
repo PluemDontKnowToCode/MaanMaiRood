@@ -66,7 +66,7 @@ def main():
                 pass
             case 5: #search room
                 inp = int(input("Enter room number : "))
-                hotel.search(room_number=inp)
+                print(hotel.search(room_number=inp))
                 pass
             case 6: #export to csv
                 hotel.export_to_csv()
