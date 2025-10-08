@@ -7,6 +7,7 @@ class Hotel:
     def __init__(self):
         self.tree = AVLTree()
         self.last_room = 0
+        self.last_group = 0
         return
     
     #For requirement 1 and requirement 3
@@ -15,6 +16,8 @@ class Hotel:
         #temporaly
         passengers , cars , boats, walkins = channels
         # Room.increase_all_number(passengers * cars * boats + walkins)
+        
+        self.last_group += 1
         if self.last_room > 0:
             self.update_room_number(passengers * cars * boats + walkins)
         room_count = 0 
@@ -22,11 +25,12 @@ class Hotel:
             for car in range(1 , cars + 1):
                 for passenger in range(1, passengers + 1):
                     room_count += 1
-                    self.tree.add(Room(f"{passenger}_{car}_{boat}_0", room_count))
+                    self.tree.add(Room(f"{self.last_group}_{passenger}_{car}_{boat}_0", room_count))
 
         for walkin in range(1, walkins + 1):
             room_count += 1
-            self.tree.add(Room(f"0_0_0_{walkin}",room_count))
+            self.tree.add(Room(f"{self.last_group}_0_0_0_{walkin}",room_count))
+
         self.last_room += passengers * cars * boats + walkins
         return
     
@@ -84,7 +88,7 @@ class Hotel:
     def getCSV(self):
         data = self.tree.inorder()
 
-        with open("fruits.csv", "w") as f:
+        with open("hotel.csv", "w") as f:
             for item in data:
                 f.write(str(item) + "\n")
     
