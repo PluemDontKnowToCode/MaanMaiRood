@@ -25,16 +25,24 @@ class Hotel:
             for car in range(1 , cars + 1):
                 for passenger in range(1, passengers + 1):
                     room_count += 1
-                    self.tree.add(Room(f"{self.last_group}_{passenger}_{car}_{boat}_0", room_count))
+                    # self.tree.add(Room(f"{self.last_group}_{passenger}_{car}_{boat}_0", room_count))
+                    self.add_room(self.last_group, passenger, car,boat, 0, room_count)
 
         for walkin in range(1, walkins + 1):
             room_count += 1
-            self.tree.add(Room(f"{self.last_group}_0_0_0_{walkin}",room_count))
+            # self.tree.add(Room(f"{self.last_group}_0_0_0_{walkin}",room_count))
+            self.add_room(self.last_group, 0,0,0,walkin, room=room_count)
 
         self.last_room += passengers * cars * boats + walkins
         return
     
-    # def add_room(self, ):
+
+    #Set Guest format
+    def add_room(self, group, passenger, car, boat,walkin, room):
+        self.tree.add(Room(f"{group}_{passenger}_{car}_{boat}_{walkin}", room))
+        return
+
+
     #For requirement 2
     @track
     def assign_room(self, channel):
