@@ -68,7 +68,7 @@ class Hotel:
             if self.last_room > 0:
                 self.update_room_number(count)
             for i in range(1, count + 1):
-                self.tree.add(Room(f"mannual", i))
+                self.tree.add(Room(f"manual", i))
                 pbar.update(1) 
         return
     
@@ -94,13 +94,16 @@ class Hotel:
     def export_to_file(self):
         self.getCSV()
         # all_room = self.get_all_available_room()
-        # auto_download(all_room)
+        # auto_download(self.data)
         return
     
     def getCSV(self):
-        data = self.data
+        if self.tree.inorder() is None:
+            print("No Room")
+            return 
+        data = self.tree.inorder()
 
-        with open("hotel.txt", "w") as f:
+        with open("hotel.csv", "w") as f:
             for item in data:
                 f.write(str(item) + "\n")
     

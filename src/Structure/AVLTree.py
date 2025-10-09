@@ -124,9 +124,13 @@ class AVLTree:
             if focus.right is not None:
                 self.preorder(focus.right ,List)
         return List
+    
     def inorder(self):
+        if self.root == None:
+            return None
         op = []
         return self._inorder(self.root, op)
+    
     def _inorder(self, focus, List):
         # Left → Root → Right
         if focus.left is not None:
