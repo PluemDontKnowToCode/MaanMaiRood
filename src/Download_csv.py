@@ -45,7 +45,7 @@ def auto_open_browser():
     webbrowser.open("http://127.0.0.1:5000/")
 
 def run_flask():
-    app.run(port=5000, debug=False, use_reloader=False)
+    app.run(port=5000, debug=True, use_reloader=False)
 def auto_download(data):
     global file_csv
     file_csv = data

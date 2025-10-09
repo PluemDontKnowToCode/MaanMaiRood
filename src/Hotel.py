@@ -64,10 +64,12 @@ class Hotel:
     #For requirement 4
     @track  
     def manual_add(self, count):
-        if self.last_room > 0:
-            self.update_room_number(count)
-        for i in range(1, count + 1):
-            self.tree.add(Room(f"mannual", i))
+        with tqdm(total=count, desc="Adding rooms", unit="room") as pbar:
+            if self.last_room > 0:
+                self.update_room_number(count)
+            for i in range(1, count + 1):
+                self.tree.add(Room(f"mannual", i))
+                pbar.update(1) 
         return
     
     #For requirement 5
