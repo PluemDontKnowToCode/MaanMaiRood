@@ -1,88 +1,107 @@
-class AVLNode:
-	def __init__(self, data , left = None, right = None):
-		self.data = data
-		self.left = None if left is None else left
-		self.right = None if right is None else right
-		self.height = self.setHeight()
-
-	def __str__(self):
-		return str(self.data)
-	
-	def setHeight(self):
-		a = self.getHeight(self.left)
-		b = self.getHeight(self.right)
-		self.height = 1 + max(a,b)
-		return self.height
-	
-	def getHeight(self,node):
-		return -1 if node == None else node.height
-	
-	def balanceValue(self):
-		return int(self.getHeight(self.left)) - int(self.getHeight(self.right))
-    
-
+class Node:
+    def __init__(self, key):
+        self.data = key
+        self.left = None
+        self.right = None
+        self.height = 1
+    def __str__(self):
+        return str(self.data)
 
 class AVLTree:
     def __init__(self):
         self.root = None
 
+    def getHeight(self, node):
+        if not node:
+            return 0
+        return node.height
 
-    def add(self, data):
-        data = int(data)
-        if not self.root:
-            self.root = AVLNode(data)
-            return
+    def getBalance(self, node):
+        if not node:
+            return 0
+        return self.getHeight(node.left) - self.getHeight(node.right)
 
-    def add(self, data):
-        self.root = self._add(self.root, data)
-
-    def _add(self, root, data):
-        if root is None:
-            return AVLNode(data)
-        if int(data) < int(root.data):
-            root.left = self._add(root.left, data)
-        else:
-            root.right = self._add(root.right, data)
-        root = self.rebalance(root)
-        return root
-
-
-    def rebalance(self, x):
-        if x == None:
-            return x
-        balance = x.balanceValue()
-
-        if balance <= -2:
-            if x.right.balanceValue() == 1:
-                x.right = self.leftRotate(x.right)
-            x = self.rightRotate(x)
-        elif balance >= 2:
-            if x.left.balanceValue() == -1:
-                x.left = self.rightRotate(x.left)
-            x = self.leftRotate(x)
-        x.setHeight()
+    def rightRotate(self, y):
+        x = y.left
+        T2 = x.right
+        x.right = y
+        y.left = T2
+        y.height = 1 + max(self.getHeight(y.left), self.getHeight(y.right))
+        x.height = 1 + max(self.getHeight(x.left), self.getHeight(x.right))
         return x
 
     def leftRotate(self, x):
-        y = x.left
-        x.left = y.right
-        y.right = x
-        x.setHeight()
-        y.setHeight()
+        y = x.right
+        T2 = y.left
+        y.left = x
+        x.right = T2
+        x.height = 1 + max(self.getHeight(x.left), self.getHeight(x.right))
+        y.height = 1 + max(self.getHeight(y.left), self.getHeight(y.right))
         return y
 
-    def rightRotate(self, x):
-        y = x.right
-        x.right = y.left
-        y.left = x
-        x.setHeight()
-        y.setHeight()
-        return y
+    # === นี่คือฟังก์ชันที่แก้ไขแล้ว ===
+    def add(self, data):
+        current_data = int(data)
+        if not self.root:
+            self.root = Node(data)
+            return
+
+        # --- ส่วนที่ 1: การวน Loop เพื่อหาตำแหน่งและเก็บเส้นทาง (Path) ---
+        path = []
+        current = self.root # เริ่มจากรากของจริง แค่ครั้งเดียว
+        while True: # ใช้ True loop แล้ว break ข้างในจะชัดเจนกว่า
+            path.append(current)
+            if current_data < current.data:
+                if not current.left:
+                    current.left = Node(data)
+                    break
+                current = current.left
+            else: # สามารถใช้ else ได้เลย เพราะ AVL ไม่มีค่าซ้ำ
+                if not current.right:
+                    current.right = Node(data)
+                    break
+                current = current.right
+        
+        # --- ส่วนที่ 2: การย้อนรอย (Backtrack) เพื่อ Rebalance ---
+        # Loop นี้จะทำงานย้อนหลังจากโหนดพ่อของใบใหม่ ขึ้นไปจนถึงราก
+        for i in range(len(path) - 1, -1, -1):
+            node = path[i]
+            node.height = 1 + max(self.getHeight(node.left), self.getHeight(node.right))
+            balance = self.getBalance(node)
+            
+            new_subtree_root = None
+
+            # ตรวจสอบ 4 รูปแบบของการเสียสมดุล
+            # Left Left Case
+            if balance > 1 and current_data < node.left.data:
+                new_subtree_root = self.rightRotate(node)
+            # Right Right Case
+            elif balance < -1 and current_data > node.right.data:
+                new_subtree_root = self.leftRotate(node)
+            # Left Right Case
+            elif balance > 1 and current_data > node.left.data:
+                node.left = self.leftRotate(node.left)
+                new_subtree_root = self.rightRotate(node)
+            # Right Left Case
+            elif balance < -1 and current_data < node.right.data:
+                node.right = self.rightRotate(node.right)
+                new_subtree_root = self.leftRotate(node)
+
+            # ถ้ามีการหมุนเกิดขึ้น ให้เชื่อมโหนดที่หมุนแล้วกลับเข้าต้นไม้
+            if new_subtree_root:
+                if i > 0:
+                    parent = path[i-1]
+                    if node == parent.left:
+                        parent.left = new_subtree_root
+                    else:
+                        parent.right = new_subtree_root
+                else: # ถ้าการหมุนเกิดขึ้นที่ root
+                    self.root = new_subtree_root
 
     def _printTree(self, node, level = 0):
         if node != None:
             self._printTree(node.left, level + 1)
-            print(f"{node}")
+            print(f"{str(node)}")
             self._printTree(node.right, level + 1)
 
     def printTree(self):
