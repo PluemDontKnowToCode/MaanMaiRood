@@ -19,9 +19,19 @@ class AVLNode:
 	
 	def balanceValue(self):
 		return int(self.getHeight(self.left)) - int(self.getHeight(self.right))
+    
+
+
 class AVLTree:
     def __init__(self):
         self.root = None
+
+
+    def add(self, data):
+        data = int(data)
+        if not self.root:
+            self.root = AVLNode(data)
+            return
 
     def add(self, data):
         self.root = self._add(self.root, data)
@@ -35,6 +45,7 @@ class AVLTree:
             root.right = self._add(root.right, data)
         root = self.rebalance(root)
         return root
+
 
     def rebalance(self, x):
         if x == None:
@@ -110,10 +121,10 @@ class AVLTree:
         return self.rebalance(node)
     
     def get_successer(self, node):
-        current = node
-        while current.left is not None:
-            current = current.left
-        return current
+        root = node
+        while root.left is not None:
+            root = root.left
+        return root
     
     def preorder(self, focus, List):
         # Root → Left → Right
