@@ -2,7 +2,6 @@
 from Structure.AVLTree import AVLTree
 from Helper.track import *
 from Room import Room
-from Download_csv import *
 from tqdm import tqdm
 
 class Hotel:
@@ -32,7 +31,7 @@ class Hotel:
                 for car in range(1 , cars + 1):
                     for passenger in range(1, passengers + 1):
                         room_count += 1
-                        self.add_room(self.last_group, passenger, car,boat, 0, room_count)
+                        self.tree.add(Room(f"{self.last_group}_{passenger}_{car}_{boat}_{0}", room_count))
                         pbar.update(1) 
 
             for walkin in range(1, walkins + 1):
@@ -107,3 +106,18 @@ class Hotel:
             for item in data:
                 f.write(str(item) + "\n")
     
+
+from tqdm import *
+if __name__ == "__main__":
+    tree = AVLTree()
+    a,b,c = [int(i) for i in input("Enter: ").split()]
+    sum = a*b*c
+    with tqdm(total=10000, desc="Adding rooms", unit="room") as pbar:
+        # for i in range(a):
+        #     for j in range(b):
+        #         for z in range(c):
+        #             tree.add(Room(i,i))
+        #             pbar.update(1) 
+        for i in range(sum):
+            tree.add(Room(i,i))
+            pbar.update(1) 
