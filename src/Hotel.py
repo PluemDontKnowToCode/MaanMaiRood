@@ -3,6 +3,8 @@ from Structure.AVLTree import AVLTree
 from Helper.track import *
 from Room import Room
 from Download_csv import *
+from tqdm import tqdm
+
 class Hotel:
     def __init__(self):
         self.tree = AVLTree()
@@ -15,25 +17,30 @@ class Hotel:
     def insert(self, channels):
         #temporaly
         passengers , cars , boats, walkins = channels
-        # Room.increase_all_number(passengers * cars * boats + walkins)
-        
+
+        total_rooms = passengers * cars * boats + walkins
+
         self.last_group += 1
+
         if self.last_room > 0:
-            self.update_room_number(passengers * cars * boats + walkins)
+            self.update_room_number(total_rooms)
+
         room_count = 0 
-        for boat in range(1, boats + 1):
-            for car in range(1 , cars + 1):
-                for passenger in range(1, passengers + 1):
-                    room_count += 1
-                    # self.tree.add(Room(f"{self.last_group}_{passenger}_{car}_{boat}_0", room_count))
-                    self.add_room(self.last_group, passenger, car,boat, 0, room_count)
 
-        for walkin in range(1, walkins + 1):
-            room_count += 1
-            # self.tree.add(Room(f"{self.last_group}_0_0_0_{walkin}",room_count))
-            self.add_room(self.last_group, 0,0,0,walkin, room=room_count)
+        with tqdm(total=total_rooms, desc="Adding rooms", unit="room") as pbar:
+            for boat in range(1, boats + 1):
+                for car in range(1 , cars + 1):
+                    for passenger in range(1, passengers + 1):
+                        room_count += 1
+                        self.add_room(self.last_group, passenger, car,boat, 0, room_count)
+                        pbar.update(1) 
 
-        self.last_room += passengers * cars * boats + walkins
+            for walkin in range(1, walkins + 1):
+                room_count += 1
+                self.add_room(self.last_group, 0,0,0,walkin, room=room_count)
+                pbar.update(1) 
+
+        self.last_room += room_count
         return
     
 
@@ -71,9 +78,7 @@ class Hotel:
     
     @track
     def get_all_available_room(self):
-        # Create CSV data in memory
-        data = self.tree.inorder()
-        return data
+        self.tree.printTree()
     
 
     #For requirement 7
@@ -84,20 +89,16 @@ class Hotel:
     
     #For requirement 11
     @track
-    def export_to_csv(self):
+    def export_to_file(self):
         self.getCSV()
         # all_room = self.get_all_available_room()
         # auto_download(all_room)
-
         return
-    def printTree(self):
-        self.tree.printTree()
     
     def getCSV(self):
-        data = self.tree.inorder()
+        data = self.data
 
-        with open("hotel.csv", "w") as f:
+        with open("hotel.txt", "w") as f:
             for item in data:
                 f.write(str(item) + "\n")
-    
     

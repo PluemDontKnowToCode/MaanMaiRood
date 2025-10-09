@@ -21,7 +21,7 @@ def shutdown():
 def download_csv():
     
     global file_csv
-
+    
     file_csv = pd.DataFrame(
         file_csv, # Hotel list
         columns=[
@@ -46,7 +46,6 @@ def auto_open_browser():
 
 def run_flask():
     app.run(port=5000, debug=False, use_reloader=False)
-
 def auto_download(data):
     global file_csv
     file_csv = data
@@ -58,7 +57,7 @@ def auto_download(data):
     
     start_time = time.time()
     while flask_thread.is_alive():
-        if time.time() - start_time > 1:  # กันเผื่อกรณี error
+        if time.time() - start_time > 10:  # กันเผื่อกรณี error
             break
         time.sleep(0.5)
 

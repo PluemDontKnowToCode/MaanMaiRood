@@ -68,17 +68,15 @@ def main():
                     inp = int(input("Enter room number : "))
                     hotel.manual_remove(room_number=inp)
                     pass
-                # case 4: #rearrange room
-                #     pass
                 case 4: #search room
                     inp = int(input("Enter room number : "))
                     print(hotel.search(room_number=inp))
                     pass
                 case 5: #export to csv
-                    hotel.export_to_csv()
+                    hotel.export_to_file()
                     pass
                 case 6: #print tree
-                    hotel.printTree()
+                    hotel.get_all_available_room()
                     pass
                 case 7: #Quit App
                     return
