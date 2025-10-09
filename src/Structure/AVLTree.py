@@ -204,3 +204,4 @@ class AVLTree:
         focus.data.number += value
         if focus.right is not None:
             self._update(focus.right, value)
+    
