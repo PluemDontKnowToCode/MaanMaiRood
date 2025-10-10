@@ -33,7 +33,7 @@ def main():
         "Manully check-out guests",
         "Search room",
         "Export to CSV file",
-        "Print All Room",
+        "Print Available Room",
         "Quit App"
     ]
     
@@ -52,41 +52,41 @@ def main():
 
         if input_option == 'q':
             return
-        # try:
-        input_option = int(input_option)
-        
-        match input_option:
-            case 1: #add by channel
-                channels = []
-                for i in range(len(CHANNEL_ENTRY)):
-                    channels.append(int(input(f"{CHANNEL_ENTRY[i]} : ")))
-                print()
-                hotel.insert(channels=channels)
-                pass
-            case 2: # manual add
-                inp = int(input("Enter guests amount : "))
-                hotel.manual_add(count=inp)
-                pass
-            case 3: # manual remove
-                inp = int(input("Enter room number : "))
-                hotel.manual_remove(room_number=inp)
-                pass
-            case 4: #search room
-                inp = int(input("Enter room number : "))
-                print(hotel.search(room_number=inp))
-                pass
-            case 5: #export to csv
-                hotel.export_to_file()
-                pass
-            case 6: #print tree
-                hotel.get_all_available_room()
-                pass
-            case 7: #Quit App
-                return
-            case _:
-                raise SyntaxError("Invalid Input Option")
-        # except:
-            # print("Invalid Input")
+        try:
+            input_option = int(input_option)
+            
+            match input_option:
+                case 1: #add by channel
+                    channels = []
+                    for i in range(len(CHANNEL_ENTRY)):
+                        channels.append(int(input(f"{CHANNEL_ENTRY[i]} : ")))
+                    print()
+                    hotel.insert(channels=channels)
+                    pass
+                case 2: # manual add
+                    inp = int(input("Enter guests amount : "))
+                    hotel.manual_add(count=inp)
+                    pass
+                case 3: # manual remove
+                    inp = int(input("Enter room number : "))
+                    hotel.manual_remove(room_number=inp)
+                    pass
+                case 4: #search room
+                    inp = int(input("Enter room number : "))
+                    hotel.search(room_number=inp)
+                    pass
+                case 5: #export to csv
+                    hotel.export_to_file()
+                    pass
+                case 6: #print tree
+                    hotel.get_all_available_room()
+                    pass
+                case 7: #Quit App
+                    return
+                case _:
+                    raise SyntaxError("Invalid Input Option")
+        except:
+            print("Invalid Input")
         input("Press enter to continue")
         clear_screen()
 

@@ -1,8 +1,12 @@
+from tqdm import tqdm
+
 from Structure.AVLTree_recur import AVLTree  # -> around 70,000 room/sec when adding room
 # from Structure.AVLTree import AVLTree  # -> around 90,000 room/sec can go above 100,000 room/sec when adding room 
-from Helper.track import *
+
 from Room import Room
-from tqdm import tqdm
+
+from Helper.track import *
+from Helper.color import *
 
 class Hotel:
     def __init__(self):
@@ -11,7 +15,7 @@ class Hotel:
         self.last_group = 0
         return
     
-    #For requirement 1 and requirement 3
+    #For requirement 1 requirement 2 and requirement 3
     @track
     def insert(self, channels):
         #temporaly
@@ -50,14 +54,8 @@ class Hotel:
 
 
     #For requirement 2
-    @track
-    def assign_room(self, channel):
-        return
-    
     def update_room_number(self, amount):
         self.tree.update(amount)
-        #change algorithm
-        # Room.increase_all_number(amount)
         return
     
     #For requirement 4
@@ -79,45 +77,41 @@ class Hotel:
     
     @track
     def get_all_available_room(self):
-        self.tree.printTree()
+        data = self.tree.inorder()
+        if data is None:
+            print("\nNo Room\n")
+            return 
+        for item in data:
+            print(item)
     
 
     #For requirement 7
     @track
     def search(self, room_number):
         result = self.tree.search(room_number)
-        return f"Room : {result}" if result else "Room Not found"
-    
+        op = ""
+        if result:
+            op = f"{result}"
+        else:
+            op = "Room Not found"
+        print()
+        print(op)
+       
     #For requirement 11
     @track
     def export_to_file(self):
         self.getCSV()
-        # all_room = self.get_all_available_room()
-        # auto_download(self.data)
         return
     
     def getCSV(self):
-        if self.tree.inorder() is None:
-            print("No Room")
-            return 
         data = self.tree.inorder()
+        if data is None:
+            print("\nNo Room")
+            return 
+        
 
         with open("hotel.csv", "w") as f:
             for item in data:
                 f.write(str(item) + "\n")
-    
+        print("\nExport Success")
 
-from tqdm import *
-if __name__ == "__main__":
-    tree = AVLTree()
-    a,b,c = [int(i) for i in input("Enter: ").split()]
-    sum = a*b*c
-    with tqdm(total=10000, desc="Adding rooms", unit="room") as pbar:
-        # for i in range(a):
-        #     for j in range(b):
-        #         for z in range(c):
-        #             tree.add(Room(i,i))
-        #             pbar.update(1) 
-        for i in range(sum):
-            tree.add(Room(i,i))
-            pbar.update(1) 
