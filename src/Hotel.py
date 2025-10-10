@@ -1,5 +1,5 @@
-
-from Structure.AVLTree import AVLTree
+from Structure.AVLTree_recur import AVLTree  # -> around 70,000 room/sec when adding room
+# from Structure.AVLTree import AVLTree  # -> around 90,000 room/sec can go above 100,000 room/sec when adding room 
 from Helper.track import *
 from Room import Room
 from tqdm import tqdm
