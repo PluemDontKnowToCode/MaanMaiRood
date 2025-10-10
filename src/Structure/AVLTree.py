@@ -50,7 +50,7 @@ class AVLTree:
         current = self.root 
         while True: 
             path.append(current)
-            
+
             if current_data < current.data:
                 if not current.left:
                     current.left = Node(data)
@@ -166,49 +166,11 @@ class AVLTree:
             current.data = successor.data # สลับค่า
             
             if successor == successor_parent.left:  # ลบ successor 
-                successor_parent.left = successor.right # ยังไงก็มีแค่ทางขวา ถ้าจะมีลูก
+                successor_parent.left = successor.right # ยังไงก็มีแค่ทางขวา ถ้า successor มีลูก
             else: 
                 successor_parent.right = successor.right
 
         self.rebalance(path, 0) 
-
-    
-    # def remove(self, data):
-    #     self.root = self._remove(self.root, data)
-
-    # def _remove(self, node, data):
-    #     if node is None:
-    #         return None
-    #     if data < node.data:
-    #         node.left = self._remove(node.left, data)
-    #     elif data > node.data:
-    #         node.right = self._remove(node.right, data)
-    #     else:
-    #         if node.left is None:
-    #             return node.right
-    #         elif node.right is None:
-    #             return node.left
-    #         temp = self.get_successer(node.right)
-    #         node.data = temp.data
-    #         node.right = self._remove(node.right, temp.data)
-            
-    #     node.height = 1 + max(self.getHeight(node.left), self.getHeight(node.right))
-    #     balance = self.getBalance(node)
-    #     # Left Left
-    #     if balance > 1 and self.getBalance(node.left) >= 0:
-    #         return self.rightRotate(node)
-    #     # Left Right
-    #     if balance > 1 and self.getBalance(node.left) < 0:
-    #         node.left = self.leftRotate(node.left)
-    #         return self.rightRotate(node)
-    #     # Right Right
-    #     if balance < -1 and self.getBalance(node.right) <= 0:
-    #         return self.leftRotate(node)
-    #     # Right Left
-    #     if balance < -1 and self.getBalance(node.right) > 0:
-    #         node.right = self.rightRotate(node.right)
-    #         return self.leftRotate(node)
-    #     return node
 
     
     def preorder(self, focus, List):
