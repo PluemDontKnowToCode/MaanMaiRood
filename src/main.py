@@ -5,26 +5,26 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src.Hotel import Hotel
 from Helper.color import *
 
-BANNER =bcolors.OKBLUE +"""
-███╗   ███╗ █████╗  █████╗ ███╗   ██╗███╗   ███╗ █████╗ ██╗██████╗  ██████╗  ██████╗ ██████╗ 
-████╗ ████║██╔══██╗██╔══██╗████╗  ██║████╗ ████║██╔══██╗██║██╔══██╗██╔═══██╗██╔═══██╗██╔══██╗
-██╔████╔██║███████║███████║██╔██╗ ██║██╔████╔██║███████║██║██████╔╝██║   ██║██║   ██║██║  ██║
-██║╚██╔╝██║██╔══██║██╔══██║██║╚██╗██║██║╚██╔╝██║██╔══██║██║██╔══██╗██║   ██║██║   ██║██║  ██║
-██║ ╚═╝ ██║██║  ██║██║  ██║██║ ╚████║██║ ╚═╝ ██║██║  ██║██║██║  ██║╚██████╔╝╚██████╔╝██████╔╝
-╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═════╝ 
-""" + bcolors.ENDC
+BANNER =bcolors.GOLD +"""
+============================================ welcome to ==================================================
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ ███╗   ███╗ █████╗  █████╗ ███╗   ██╗    ███╗   ███╗ █████╗ ██╗    ██████╗  ██████╗  ██████╗ ██████╗   │
+│ ████╗ ████║██╔══██╗██╔══██╗████╗  ██║    ████╗ ████║██╔══██╗██║    ██╔══██╗██╔═══██╗██╔═══██╗██╔══██╗  │
+│ ██╔████╔██║███████║███████║██╔██╗ ██║    ██╔████╔██║███████║██║    ██████╔╝██║   ██║██║   ██║██║  ██║  │
+│ ██║╚██╔╝██║██╔══██║██╔══██║██║╚██╗██║    ██║╚██╔╝██║██╔══██║██║    ██╔══██╗██║   ██║██║   ██║██║  ██║  │
+│ ██║ ╚═╝ ██║██║  ██║██║  ██║██║ ╚████║    ██║ ╚═╝ ██║██║  ██║██║    ██║  ██║╚██████╔╝╚██████╔╝██████╔╝  │
+│ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝    ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝    ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═════╝   │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+""" + bcolors.ENDC 
+
 CHANNEL_ENTRY = [
     "passenger in a car",
     "car in a boat",
     "boat",
     "walkin passenger"
 ]
-def clear_screen():
-    try:
-        os.system('cls' if os.name == 'nt' else 'clear')
-    except Exception:
-        sys.stdout.write('\033[2J\033[H')
-        sys.stdout.flush()
+
 def main():
     hotel = Hotel()
     option = [
@@ -39,13 +39,14 @@ def main():
     
     while True:
         print(BANNER)
-        print()
-        print("------------------------------------------------")
-        print()
-        print(f"{bcolors.BOLD}{bcolors.OKGREEN}                 TYPE 1 - {len(option)}                   {bcolors.ENDC}")
+        print("--------------------------------------------------------\n")
+        print(f"{bcolors.BOLD}{bcolors.LIGHTRED}                 TYPE 1 - {len(option)}                   {bcolors.ENDC}")
         print()
         for i in range(len(option)):
-            print(f"{bcolors.WHITE}{i + 1} : {option[i]}{bcolors.ENDC}")
+            print(f"{bcolors.DRAKYELLOW}{i + 1} : {option[i]}{bcolors.ENDC}")
+
+        print()
+        print("--------------------------------------------------------")
         print()
         input_option = input("Select your option : ")
 
@@ -88,6 +89,13 @@ def main():
             # print("Invalid Input")
         input("Press enter to continue")
         clear_screen()
+
+def clear_screen():
+    try:
+        os.system('cls' if os.name == 'nt' else 'clear')
+    except Exception:
+        sys.stdout.write('\033[2J\033[H')
+        sys.stdout.flush()
 
 
 if __name__ == "__main__":

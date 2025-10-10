@@ -1,30 +1,38 @@
+import random
+
 class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKCYAN = '\033[96m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-    BLACK = '\033[30m'
-    RED = '\033[31m'
-    GREEN = '\033[32m'
-    YELLOW = '\033[33m'
-    BLUE = '\033[34m'
-    MAGENTA = '\033[35m'
-    CYAN = '\033[36m'
-    WHITE = '\033[37m'
-    BG_BLACK = '\033[40m'
-    BG_RED = '\033[41m'
-    BG_GREEN = '\033[42m'
-    BG_YELLOW = '\033[43m'
-    BG_BLUE = '\033[44m'
-    BG_MAGENTA = '\033[45m'
-    BG_CYAN = '\033[46m'
-    BG_WHITE = '\033[47m'
-    GREY = '\033[90m'
+
+    WARNING   = '\033[38;2;255;255;102m'   # yellowish
+    FAIL      = '\033[38;2;255;51;51m'     # red
+    BLACK     = '\033[38;2;0;0;0m'
+    RED       = '\033[38;2;255;0;0m'
+    GREEN     = '\033[38;2;0;128;0m'
+    YELLOW    = '\033[38;2;255;255;0m'
+    DRAKYELLOW= '\033[38;2;204;204;100m'
+    BLUE      = '\033[38;2;0;0;255m'
+    MAGENTA   = '\033[38;2;255;0;255m'
+    CYAN      = '\033[38;2;0;255;255m'
+    WHITE     = '\033[38;2;255;255;255m'
+    GREY      = '\033[38;2;128;128;128m'
+    SKYBLUE   = '\033[38;2;135;206;235m'
+    ORANGE    = '\033[38;2;255;165;0m'
+    GOLD      = '\033[38;2;240;215;0m'
+    LIGHTRED  = '\033[38;2;255;75;75m'
+
+    BG_BLACK   = '\033[48;2;0;0;0m'
+    BG_RED     = '\033[48;2;255;0;0m'
+    BG_GREEN   = '\033[48;2;0;128;0m'
+    BG_YELLOW  = '\033[48;2;255;255;0m'
+    BG_BLUE    = '\033[48;2;0;0;255m'
+    BG_MAGENTA = '\033[48;2;255;0;255m'
+    BG_CYAN    = '\033[48;2;0;255;255m'
+    BG_WHITE   = '\033[48;2;255;255;255m'
+
+    def getRandomFrontColor():
+        return f'\033[38;2;{random.randint(0,255)};{random.randint(0,255)};{random.randint(0,255)}m'
 
 #how to use
 #print(f"{bcolors.OKGREEN}This is green text{bcolors.ENDC}")
