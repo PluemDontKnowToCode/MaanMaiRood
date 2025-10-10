@@ -1,7 +1,7 @@
 from tqdm import tqdm
 
-from Structure.AVLTree_recur import AVLTree  # -> around 70,000 room/sec when adding room
-# from Structure.AVLTree import AVLTree  # -> around 90,000 room/sec can go above 100,000 room/sec when adding room 
+# from Structure.AVLTree_recur import AVLTree  # -> around 70,000 room/sec when adding room
+from Structure.AVLTree import AVLTree  # -> around 90,000 room/sec can go above 100,000 room/sec when adding room 
 
 from Room import Room
 
@@ -12,7 +12,7 @@ class Hotel:
     def __init__(self):
         self.tree = AVLTree()
         self.last_room = 0
-        self.last_group = 0
+        self.last_group = 0 
         return
     
     
@@ -100,7 +100,7 @@ class Hotel:
     def export_to_file(self):
         data = self.tree.inorder()
         if data is None:
-            print("\nNo Room")
+            print("\nNo Room\n")
             return 
         
 

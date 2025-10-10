@@ -39,31 +39,33 @@ class AVLTree:
         y.height = 1 + max(self.getHeight(y.left), self.getHeight(y.right))
         return y
 
-    # === นี่คือฟังก์ชันที่แก้ไขแล้ว ===
+
     def add(self, data):
         current_data = int(data)
         if not self.root:
             self.root = Node(data)
             return
 
-        # --- ส่วนที่ 1: การวน Loop เพื่อหาตำแหน่งและเก็บเส้นทาง (Path) ---
         path = []
-        current = self.root # เริ่มจากรากของจริง แค่ครั้งเดียว
-        while True: # ใช้ True loop แล้ว break ข้างในจะชัดเจนกว่า
+        current = self.root 
+        while True: 
             path.append(current)
+            
             if current_data < current.data:
                 if not current.left:
                     current.left = Node(data)
                     break
                 current = current.left
-            else: # สามารถใช้ else ได้เลย เพราะ AVL ไม่มีค่าซ้ำ
+            else: 
                 if not current.right:
                     current.right = Node(data)
                     break
                 current = current.right
+
+        self.rebalance(path,1,data)
+
         
-        # --- ส่วนที่ 2: การย้อนรอย (Backtrack) เพื่อ Rebalance ---
-        # Loop นี้จะทำงานย้อนหลังจากโหนดพ่อของใบใหม่ ขึ้นไปจนถึงราก
+    def rebalance(self, path, mode, data=None):
         for i in range(len(path) - 1, -1, -1):
             node = path[i]
             node.height = 1 + max(self.getHeight(node.left), self.getHeight(node.right))
@@ -71,23 +73,21 @@ class AVLTree:
             
             new_subtree_root = None
 
-            # ตรวจสอบ 4 รูปแบบของการเสียสมดุล
-            # Left Left Case
-            if balance > 1 and current_data < node.left.data:
-                new_subtree_root = self.rightRotate(node)
-            # Right Right Case
-            elif balance < -1 and current_data > node.right.data:
-                new_subtree_root = self.leftRotate(node)
-            # Left Right Case
-            elif balance > 1 and current_data > node.left.data:
-                node.left = self.leftRotate(node.left)
-                new_subtree_root = self.rightRotate(node)
-            # Right Left Case
-            elif balance < -1 and current_data < node.right.data:
-                node.right = self.rightRotate(node.right)
-                new_subtree_root = self.leftRotate(node)
+            if balance > 1:
+                if (mode and data < node.left.data) or (not mode and self.getBalance(node.left) >= 0):
+                    new_subtree_root = self.rightRotate(node)   # LL
+                else:
+                    node.left = self.leftRotate(node.left)      # LR
+                    new_subtree_root = self.rightRotate(node)
 
-            # ถ้ามีการหมุนเกิดขึ้น ให้เชื่อมโหนดที่หมุนแล้วกลับเข้าต้นไม้
+            elif balance < -1:
+                if (mode and data > node.right.data) or (not mode and self.getBalance(node.right) <= 0):
+                    new_subtree_root = self.leftRotate(node)    # RR
+                else: # RL
+                    node.right = self.rightRotate(node.right)   # RL
+                    new_subtree_root = self.leftRotate(node)
+
+
             if new_subtree_root:
                 if i > 0:
                     parent = path[i-1]
@@ -95,8 +95,9 @@ class AVLTree:
                         parent.left = new_subtree_root
                     else:
                         parent.right = new_subtree_root
-                else: # ถ้าการหมุนเกิดขึ้นที่ root
+                else:
                     self.root = new_subtree_root
+
 
     def _printTree(self, node, level = 0):
         if node != None:
@@ -120,47 +121,95 @@ class AVLTree:
         )	
     
     def remove(self, data):
-        self.root = self._remove(self.root, data)
+        current_data = int(data)
+        if not self.root:
+            print("\nNo Room\n")
+            return 
+        
+        path = []
+        current = self.root
+        parent = None
+        
+        while current and current.data != current_data: # หาทางไปเรื่อยๆ จนกว่าจะตรงค่า หรือ ถึง leaf node
+            parent = current
+            path.append(parent)
+            if current_data < current.data:
+                current = current.left
+            else:
+                current = current.right
 
-    def _remove(self, node, data):
-        if node is None:
-            return None
-        if data < node.data:
-            node.left = self._remove(node.left, data)
-        elif data > node.data:
-            node.right = self._remove(node.right, data)
-        else:
-            if node.left is None:
-                return node.right
-            elif node.right is None:
-                return node.left
-            temp = self.get_successer(node.right)
-            node.data = temp.data
-            node.right = self._remove(node.right, temp.data)
+        if not current: # ถ้าหาไม่เจอ
+            print(f"Cannot find data {current_data}")
+            return
+
+        elif not current.left or not current.right: # โหนดที่จะลบมีลูก 1 
+            child = current.left if current.left else current.right
+                
+            if not parent: # กรณีลบ root
+                self.root = child
+            elif current == parent.left:
+                parent.left = child 
+            else:
+                parent.right = child 
+        
+        else:   # โหนดที่จะลบมีลูก 2
+            successor_parent = current
+            successor = current.right
             
-        node.height = 1 + max(self.getHeight(node.left), self.getHeight(node.right))
-        balance = self.getBalance(node)
-        # Left Left
-        if balance > 1 and self.getBalance(node.left) >= 0:
-            return self.rightRotate(node)
-        # Left Right
-        if balance > 1 and self.getBalance(node.left) < 0:
-            node.left = self.leftRotate(node.left)
-            return self.rightRotate(node)
-        # Right Right
-        if balance < -1 and self.getBalance(node.right) <= 0:
-            return self.leftRotate(node)
-        # Right Left
-        if balance < -1 and self.getBalance(node.right) > 0:
-            node.right = self.rightRotate(node.right)
-            return self.leftRotate(node)
-        return node
+            path.append(successor_parent) 
+            
+            while successor.left: # หา successor ที่น้อยที่สุดฝั่งขวา
+                path.append(successor)
+                successor_parent = successor
+                successor = successor.left
+            
+            current.data = successor.data # สลับค่า
+            
+            if successor == successor_parent.left:  # ลบ successor 
+                successor_parent.left = successor.right # ยังไงก็มีแค่ทางขวา ถ้าจะมีลูก
+            else: 
+                successor_parent.right = successor.right
+
+        self.rebalance(path, 0) 
+
     
-    def get_successer(self, node):
-        root = node
-        while root.left is not None:
-            root = root.left
-        return root
+    # def remove(self, data):
+    #     self.root = self._remove(self.root, data)
+
+    # def _remove(self, node, data):
+    #     if node is None:
+    #         return None
+    #     if data < node.data:
+    #         node.left = self._remove(node.left, data)
+    #     elif data > node.data:
+    #         node.right = self._remove(node.right, data)
+    #     else:
+    #         if node.left is None:
+    #             return node.right
+    #         elif node.right is None:
+    #             return node.left
+    #         temp = self.get_successer(node.right)
+    #         node.data = temp.data
+    #         node.right = self._remove(node.right, temp.data)
+            
+    #     node.height = 1 + max(self.getHeight(node.left), self.getHeight(node.right))
+    #     balance = self.getBalance(node)
+    #     # Left Left
+    #     if balance > 1 and self.getBalance(node.left) >= 0:
+    #         return self.rightRotate(node)
+    #     # Left Right
+    #     if balance > 1 and self.getBalance(node.left) < 0:
+    #         node.left = self.leftRotate(node.left)
+    #         return self.rightRotate(node)
+    #     # Right Right
+    #     if balance < -1 and self.getBalance(node.right) <= 0:
+    #         return self.leftRotate(node)
+    #     # Right Left
+    #     if balance < -1 and self.getBalance(node.right) > 0:
+    #         node.right = self.rightRotate(node.right)
+    #         return self.leftRotate(node)
+    #     return node
+
     
     def preorder(self, focus, List):
         # Root → Left → Right
