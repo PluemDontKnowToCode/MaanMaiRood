@@ -1,9 +1,8 @@
 from time import time
 from os import getpid
 from psutil import Process
-
+from Helper.color import *
 #for decorate
-from colorama import Fore
 
 def get_process_memory():
     process = Process(getpid())
@@ -25,11 +24,11 @@ def track(func):
         memUsed = memoryAfter - memoryBefore
         print()
         print("=============memory used stat==============")
-        print(f"Function : {func.__name__}")
+        print(f"Function : {bcolors.GREEN}{func.__name__}{bcolors.ENDC}")
         # print(f"memory before: {memoryBefore:,} bytes")
         # print(f"memory after: {memoryAfter:,} bytes")
-        print(f"memory consumed: {memUsed:,} bytes")
-        print(f"function execution time : {endTime} seconds")
+        print(f"memory consumed: {bcolors.GREEN}{memUsed:,}{bcolors.ENDC} bytes")
+        print(f"function execution time : {bcolors.GREEN}{endTime}{bcolors.ENDC} seconds")
         print("===========================================")
         print()
         return result

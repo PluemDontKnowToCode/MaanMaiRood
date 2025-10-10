@@ -59,6 +59,7 @@ def main():
                 channels = []
                 for i in range(len(CHANNEL_ENTRY)):
                     channels.append(int(input(f"{CHANNEL_ENTRY[i]} : ")))
+                print()
                 hotel.insert(channels=channels)
                 pass
             case 2: # manual add

@@ -27,14 +27,14 @@ class Hotel:
         room_count = 0 
 
         with tqdm(total=total_rooms, desc="Adding rooms", unit="room") as pbar:
-            for boat in range(1, boats + 1):
-                for car in range(1 , cars + 1):
-                    for passenger in range(1, passengers + 1):
+            for boat in range(boats, -1, -1):
+                for car in range(cars, -1, -1):
+                    for passenger in range(passengers, -1, -1):
                         room_count += 1
                         self.tree.add(Room(f"{self.last_group}_{passenger}_{car}_{boat}_{0}", room_count))
                         pbar.update(1) 
 
-            for walkin in range(1, walkins + 1):
+            for walkin in range(walkins, -1, -1):
                 room_count += 1
                 self.add_room(self.last_group, 0,0,0,walkin, room=room_count)
                 pbar.update(1) 
