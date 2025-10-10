@@ -137,7 +137,24 @@ class AVLTree:
             temp = self.get_successer(node.right)
             node.data = temp.data
             node.right = self._remove(node.right, temp.data)
-        return self.rebalance(node)
+            
+        node.height = 1 + max(self.getHeight(node.left), self.getHeight(node.right))
+        balance = self.getBalance(node)
+        # Left Left
+        if balance > 1 and self.getBalance(node.left) >= 0:
+            return self.rightRotate(node)
+        # Left Right
+        if balance > 1 and self.getBalance(node.left) < 0:
+            node.left = self.leftRotate(node.left)
+            return self.rightRotate(node)
+        # Right Right
+        if balance < -1 and self.getBalance(node.right) <= 0:
+            return self.leftRotate(node)
+        # Right Left
+        if balance < -1 and self.getBalance(node.right) > 0:
+            node.right = self.rightRotate(node.right)
+            return self.leftRotate(node)
+        return node
     
     def get_successer(self, node):
         root = node
