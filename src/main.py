@@ -1,17 +1,18 @@
 import sys
 import os
-
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from src.Hotel import Hotel
 
-BANNER = """
+from src.Hotel import Hotel
+from Helper.color import *
+
+BANNER =bcolors.OKBLUE +"""
 ███╗   ███╗ █████╗  █████╗ ███╗   ██╗███╗   ███╗ █████╗ ██╗██████╗  ██████╗  ██████╗ ██████╗ 
 ████╗ ████║██╔══██╗██╔══██╗████╗  ██║████╗ ████║██╔══██╗██║██╔══██╗██╔═══██╗██╔═══██╗██╔══██╗
 ██╔████╔██║███████║███████║██╔██╗ ██║██╔████╔██║███████║██║██████╔╝██║   ██║██║   ██║██║  ██║
 ██║╚██╔╝██║██╔══██║██╔══██║██║╚██╗██║██║╚██╔╝██║██╔══██║██║██╔══██╗██║   ██║██║   ██║██║  ██║
 ██║ ╚═╝ ██║██║  ██║██║  ██║██║ ╚████║██║ ╚═╝ ██║██║  ██║██║██║  ██║╚██████╔╝╚██████╔╝██████╔╝
 ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═════╝ 
-""" 
+""" + bcolors.ENDC
 CHANNEL_ENTRY = [
     "passenger in a car",
     "car in a boat",
@@ -41,10 +42,10 @@ def main():
         print()
         print("------------------------------------------------")
         print()
-        print(f"                 TYPE 1 - {len(option)}                   ")
+        print(f"{bcolors.BOLD}{bcolors.OKGREEN}                 TYPE 1 - {len(option)}                   {bcolors.ENDC}")
         print()
         for i in range(len(option)):
-            print(f"{i + 1} : {option[i]}")
+            print(f"{bcolors.WHITE}{i + 1} : {option[i]}{bcolors.ENDC}")
         print()
         input_option = input("Select your option : ")
 
