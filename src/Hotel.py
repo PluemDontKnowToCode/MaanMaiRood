@@ -15,7 +15,8 @@ class Hotel:
         self.last_group = 0
         return
     
-    #For requirement 1 requirement 2 and requirement 3
+    
+    #For requirement 1,2 and 3
     @track
     def insert(self, channels):
         #temporaly
@@ -64,6 +65,7 @@ class Hotel:
                 pbar.update(1) 
         return
     
+
     #For requirement 5
     @track  
     def manual_remove(self, room_number):
@@ -92,13 +94,10 @@ class Hotel:
         print()
         print(op)
        
+
     #For requirement 11
     @track
     def export_to_file(self):
-        self.getCSV()
-        return
-    
-    def getCSV(self):
         data = self.tree.inorder()
         if data is None:
             print("\nNo Room")
@@ -109,4 +108,5 @@ class Hotel:
             for item in data:
                 f.write(str(item) + "\n")
         print("\nExport Success")
-
+        return 
+    
