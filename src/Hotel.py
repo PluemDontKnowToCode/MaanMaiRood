@@ -26,7 +26,7 @@ class Hotel:
         self.last_group += 1
 
         if self.last_room > 0:
-            self.update_room_number(total_rooms)
+            self.tree.update(total_rooms)
 
         room_count = 0 
 
@@ -53,24 +53,19 @@ class Hotel:
         return
 
 
-    #For requirement 2
-    def update_room_number(self, amount):
-        self.tree.update(amount)
-        return
-    
     #For requirement 4
     @track  
     def manual_add(self, count):
         with tqdm(total=count, desc="Adding rooms", unit="room") as pbar:
             if self.last_room > 0:
-                self.update_room_number(count)
+                self.tree.update(count)
             for i in range(1, count + 1):
                 self.tree.add(Room(f"manual", i))
                 pbar.update(1) 
         return
     
     #For requirement 5
-    @track
+    @track  
     def manual_remove(self, room_number):
         self.tree.remove(int(room_number))
         return
