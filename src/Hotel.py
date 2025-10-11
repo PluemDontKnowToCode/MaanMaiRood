@@ -63,16 +63,21 @@ class Hotel:
             for i in range(1, count + 1):
                 self.tree.add(Room(f"manual", i))
                 pbar.update(1) 
+        self.last_room += count
         return
     
 
     #For requirement 5
     @track  
     def manual_remove(self, room_number):
+        result = self.tree.search(room_number)
+        if not result:
+            print("Room not found")
+            return
         self.tree.remove(int(room_number))
+        print(f"Remove Room {room_number}")
         return
     
-    @track
     def get_all_available_room(self):
         data = self.tree.inorder()
         if data is None:
