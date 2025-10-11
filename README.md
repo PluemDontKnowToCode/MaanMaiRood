@@ -39,8 +39,19 @@ To run this project locally, ensure you have Python installed. Then, follow thes
    git clone https://github.com/PluemDontKnowToCode/MaanMaiRood.git
    ```
 2. **Set Up Project**:
+
+   For Windows:
    ```bash
    cd MaanMaiRood
+   python -m venv venv
+   venv/bin/activate
+   pip install -r requirements.txt
+   ```
+   For Linux/ macOS
+   ```bash
+   cd MaanMaiRood
+   python3 -m venv venv
+   source venv/bin/activate
    pip install -r requirements.txt
    ```
 3. **Run Project**
