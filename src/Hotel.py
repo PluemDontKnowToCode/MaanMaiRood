@@ -1,7 +1,7 @@
 from tqdm import tqdm
 
-# from Structure.AVLTree_recur import AVLTree  # -> around 70,000 room/sec when adding room
-from Structure.AVLTree import AVLTree  # -> around 90,000 room/sec can go above 100,000 room/sec when adding room 
+from Structure.AVLTree_recur import AVLTree  # -> around 70,000 room/sec when adding room
+# from Structure.AVLTree import AVLTree  # -> around 90,000 room/sec can go above 100,000 room/sec when adding room 
 
 from Room import Room
 
@@ -91,13 +91,11 @@ class Hotel:
     @track
     def search(self, room_number):
         result = self.tree.search(room_number)
-        op = ""
         if result:
             op = f"{result}"
         else:
             op = "Room Not found"
-        print()
-        print(op)
+        print(f'\n{op}')
        
 
     #For requirement 11

@@ -95,7 +95,7 @@ class AVLTree:
                         parent.left = new_subtree_root
                     else:
                         parent.right = new_subtree_root
-                else:
+                else:       # กรณีที่ rebalance ที่มีการย้าย root
                     self.root = new_subtree_root
 
 
