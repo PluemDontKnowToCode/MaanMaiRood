@@ -20,6 +20,7 @@ class Hotel:
     @track
     def insert(self, channels):
         self.add_room(channels)
+        self.last_group += 1
 
     #Set Guest format
     def add_room(self, channels):
@@ -27,19 +28,37 @@ class Hotel:
         
         if self.have_room():
             self.tree.update(channel_amount)
-        for index ,channel in enumerate(channels):
-            channel_name , amount = channel.strip().split()
-            amount = int(amount)
-            for j in range(amount):
-                self.tree.add(Room(f"{channel_name}", j * channel_amount + index+1))
+
+        total_rooms = 0
+
+        for i in channels:
+            channel_name , amount = i.strip().split()
+            total_rooms += int(amount)
+        with tqdm(total=total_rooms, desc="Adding rooms", unit="room") as pbar:
+            for index ,channel in enumerate(channels):
+                channel_name , amount = channel.strip().split()
+                amount = int(amount)
+                for j in range(amount):
+                    self.tree.add(Room(f"{channel_name}_{index + 1}_{j+1}_{self.last_group}", j * channel_amount + index+1))
+                    pbar.update(1)
+        
         return
 
 
     #For requirement 4
     @track  
     def manual_add(self, count):
+        channel_amount = int(self.have_room()) + 1
         
-        self.add_room([f"manual {count}"])
+        if self.have_room():
+            self.tree.update(channel_amount)
+
+
+    
+        for j in range(count):
+                self.tree.add(Room(f"manual", j * channel_amount + 1))
+                        
+        self.add_room([f"manual {count}"], True)
         return
     
 

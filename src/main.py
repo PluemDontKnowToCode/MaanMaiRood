@@ -51,8 +51,8 @@ def main():
         
         match input_option:
             case 1: #add by channel
-                print("Input Format")
-                channels = list(map(str, input("Channel Name : amount :").split(",")))
+                print(bcolors.LIGHTGREEN+"\nInput Format\nChannel Name : amount , Channel Name : amount , ...\nExample : Lopburi 10000, Home 1\n" + bcolors.ENDC)
+                channels = list(map(str, input("Input : ").split(",")))
                 hotel.insert(channels=channels)
 
                 pass
