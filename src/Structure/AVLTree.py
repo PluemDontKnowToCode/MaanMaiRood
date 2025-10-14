@@ -123,7 +123,6 @@ class AVLTree:
     def remove(self, data):
         current_data = int(data)
         if not self.root:
-            print("\nNo Room\n")
             return 
         
         path = []
@@ -229,6 +228,6 @@ class AVLTree:
             return None
         if focus.left is not None:
             self._update(focus.left, value)
-        focus.data.number += value
+        focus.data.number *= value
         if focus.right is not None:
             self._update(focus.right, value)

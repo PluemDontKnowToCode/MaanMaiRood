@@ -11,59 +11,35 @@ from Helper.color import *
 class Hotel:
     def __init__(self):
         self.tree = AVLTree()
-        self.last_room = 0
         self.last_group = 0 
         return
     
-    
+    def have_room(self):
+        return self.tree.root is not None
     #For requirement 1,2 and 3
     @track
     def insert(self, channels):
-        #temporaly
-        passengers , cars , boats, walkins = channels
-
-        total_rooms = passengers * cars * boats + walkins
-
-        self.last_group += 1
-
-        if self.last_room > 0:
-            self.tree.update(total_rooms)
-
-        room_count = 0 
-
-        with tqdm(total=total_rooms, desc="Adding rooms", unit="room") as pbar:
-            for boat in range(boats, 0, -1):
-                for car in range(cars, 0, -1):
-                    for passenger in range(passengers, 0, -1):
-                        room_count += 1
-                        self.tree.add(Room(f"{self.last_group}_{passenger}_{car}_{boat}_{0}", room_count))
-                        pbar.update(1) 
-
-            for walkin in range(walkins, 0, -1):
-                room_count += 1
-                self.add_room(self.last_group, 0,0,0,walkin, room=room_count)
-                pbar.update(1) 
-
-        self.last_room += room_count
-        return
-    
+        self.add_room(channels)
 
     #Set Guest format
-    def add_room(self, group, passenger, car, boat,walkin, room):
-        self.tree.add(Room(f"{group}_{passenger}_{car}_{boat}_{walkin}", room))
+    def add_room(self, channels):
+        channel_amount = len(channels) + int(self.have_room())
+        
+        if self.have_room():
+            self.tree.update(channel_amount)
+        for index ,channel in enumerate(channels):
+            channel_name , amount = channel.strip().split()
+            amount = int(amount)
+            for j in range(amount):
+                self.tree.add(Room(f"{channel_name}", j * channel_amount + index+1))
         return
 
 
     #For requirement 4
     @track  
     def manual_add(self, count):
-        with tqdm(total=count, desc="Adding rooms", unit="room") as pbar:
-            if self.last_room > 0:
-                self.tree.update(count)
-            for i in range(1, count + 1):
-                self.tree.add(Room(f"manual", i))
-                pbar.update(1) 
-        self.last_room += count
+        
+        self.add_room([f"manual {count}"])
         return
     
 
@@ -112,4 +88,3 @@ class Hotel:
                 f.write(str(item) + "\n")
         print("\nExport Success")
         return 
-    
