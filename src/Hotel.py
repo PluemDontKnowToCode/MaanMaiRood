@@ -53,12 +53,8 @@ class Hotel:
         if self.have_room():
             self.tree.update(channel_amount)
 
-
-    
         for j in range(count):
                 self.tree.add(Room(f"manual", j * channel_amount + 1))
-                        
-        self.add_room([f"manual {count}"], True)
         return
     
 
