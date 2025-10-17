@@ -15,6 +15,7 @@ class Hotel:
     
     def have_room(self):
         return self.tree.root is not None
+    
     #For requirement 1,2 and 3
     @track
     def insert(self, channels):
@@ -48,9 +49,7 @@ class Hotel:
 
     #For requirement 4
     @track  
-    def manual_add(self, count):
-        # channel_amount = int(self.have_room()) + 1
-        
+    def manual_add(self, count):        
         if self.have_room():
             self.tree.update()
             
