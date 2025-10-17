@@ -4,7 +4,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from src.Hotel import Hotel
 from Helper.color import *
-
+from Helper.track import *
 BANNER =bcolors.GOLD +"""
 ============================================ welcome to ==================================================
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -28,6 +28,7 @@ def main():
         "Search room",
         "Export to CSV file",
         "Print Available Room",
+        "Get Memory Usage",
         "Quit App"
     ]
     
@@ -74,7 +75,13 @@ def main():
                 case 6: #print tree
                     hotel.get_all_available_room()
                     pass
-                case 7: #Quit App
+                case 7: #get memory usage
+                    memory = get_process_memory()
+                    print("=============memory used stat==============")
+                    print(f"Function : {bcolors.LIGHTGREEN}Program Memory Used{bcolors.ENDC}")
+                    print(f"memory consumed: {bcolors.LIGHTGREEN}{memory:,}{bcolors.ENDC} bytes")
+                    print("===========================================")
+                case 8: #Quit App
                     return
                 case _:
                     raise SyntaxError("Invalid Input Option")
