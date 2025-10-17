@@ -1,4 +1,4 @@
-
+from Helper.formula import *
 class AVLNode:
 	def __init__(self, data , left = None, right = None):
 		self.data = data
@@ -24,9 +24,11 @@ class AVLNode:
 class AVLTree:
     def __init__(self):
         self.root = None
+        self.size = 0
 
     def add(self, data):
         self.root = self._add(self.root, data)
+        self.size -= 1
 
     def _add(self, root, data):
         if root is None:
@@ -93,6 +95,7 @@ class AVLTree:
     
     def remove(self, data):
         self.root = self._remove(self.root, data)
+        self.size -= 1
 
     def _remove(self, node, data):
         if node is None:
@@ -165,14 +168,14 @@ class AVLTree:
         else:
             return self._search(node.right, data)
         
-    def update(self, value):
-        self._update(self.root, value)
+    def update(self):
+        self._update(self.root, 0)
 
     def _update(self, focus, value):
         if focus is None:
             return None
         if focus.left is not None:
             self._update(focus.left, value)
-        focus.data.number *= value
+        focus.data.number = Formula.triangular_accumulate(focus.data.number, value)
         if focus.right is not None:
             self._update(focus.right, value)

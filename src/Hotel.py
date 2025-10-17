@@ -7,7 +7,7 @@ from Room import Room
 
 from Helper.track import *
 from Helper.color import *
-
+from Helper.formula import *
 class Hotel:
     def __init__(self):
         self.tree = AVLTree()
@@ -24,10 +24,10 @@ class Hotel:
 
     #Set Guest format
     def add_room(self, channels):
-        channel_amount = len(channels) + int(self.have_room())
+        # channel_amount = len(channels) + int(self.have_room())
         
         if self.have_room():
-            self.tree.update(channel_amount)
+            self.tree.update()
 
         total_rooms = 0
 
@@ -38,8 +38,10 @@ class Hotel:
             for index ,channel in enumerate(channels):
                 channel_name , amount = channel.strip().split()
                 amount = int(amount)
-                for j in range(amount):
-                    self.tree.add(Room(f"{channel_name}_{index + 1}_{j+1}_{self.last_group}", j * channel_amount + index+1))
+                for j in range(1, amount + 1):
+                    v = index + 1
+                    n = Formula.triangular_accumulate(j, v)
+                    self.tree.add(Room(f"{channel_name}_{index + 1}_{j+1}_{self.last_group}", n))
                     pbar.update(1)
         
         return
@@ -48,13 +50,16 @@ class Hotel:
     #For requirement 4
     @track  
     def manual_add(self, count):
-        channel_amount = int(self.have_room()) + 1
+        # channel_amount = int(self.have_room()) + 1
         
         if self.have_room():
-            self.tree.update(channel_amount)
-
-        for j in range(count):
-                self.tree.add(Room(f"manual", j * channel_amount + 1))
+            self.tree.update()
+        
+        for index in range(1, count + 1):
+            # v = 2
+            # n = ((v + j) * (j + v - 1)) // 2 + j
+            n = Formula.triangular_accumulate(index,1)
+            self.tree.add(Room(f"manual", n))
         return
     
 
