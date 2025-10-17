@@ -78,10 +78,10 @@ def main():
                     pass
                 case 7: #get memory usage
                     memory = get_process_memory()
-                    print("=============memory used stat==============")
+                    print("\n=============memory used stat==============")
                     print(f"Function : {bcolors.LIGHTGREEN}Program Memory Used{bcolors.ENDC}")
                     print(f"memory consumed: {bcolors.LIGHTGREEN}{memory:,}{bcolors.ENDC} bytes")
-                    print("===========================================")
+                    print("===========================================\n")
                 case 8: #Quit App
                     return
                 case _:
