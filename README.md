@@ -43,7 +43,7 @@ tqdm Progress Bar: During bulk room additions, the code uses the tqdm library to
 ## Dependencies
 
 - [`psutil`](https://pypi.org/project/psutil/) — for querying memory usage from the OS.
-
+- [`tqdm`](https://tqdm.github.io/) -for better progress bar UI 
 ---
 
 ## Getting Started
