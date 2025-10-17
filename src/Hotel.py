@@ -47,17 +47,28 @@ class Hotel:
         return
 
 
-    #For requirement 4
-    @track  
-    def manual_add(self, count):        
-        if self.have_room():
-            self.tree.update()
+    # #For requirement 4
+    # @track  
+
+    # def manual_add(self, count):        
+    #     if self.have_room():
+    #         self.tree.update()
             
-        for index in range(1, count + 1):
-            n = Formula.triangular_accumulate(index,1)
-            self.tree.add(Room(f"manual", n))
-        return
+    #     for index in range(1, count + 1):
+    #         n = Formula.triangular_accumulate(index,1)
+    #         self.tree.add(Room(f"manual", n))
+    #     return
     
+    #For requirement 4
+    @track
+    def manual_add(self, count):        
+        if self.tree.search(count) is None:
+            self.tree.add(Room(f"manual",count))
+
+        else:
+            print("Room is not Empty")
+        return
+            
 
     #For requirement 5
     @track  

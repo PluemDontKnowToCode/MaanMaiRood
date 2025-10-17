@@ -58,7 +58,8 @@ def main():
 
                     pass
                 case 2: # manual add
-                    inp = int(input("Enter guests amount : "))
+                    # inp = int(input("Enter guests amount : "))
+                    inp = int(input("Enter Room Number : "))
                     hotel.manual_add(count=inp)
                     pass
                 case 3: # manual remove
