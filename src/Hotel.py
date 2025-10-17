@@ -1,7 +1,6 @@
 from tqdm import tqdm
 
 from Structure.AVLTree_recur import AVLTree  # -> around 70,000 room/sec when adding room
-# from Structure.AVLTree import AVLTree  # -> around 90,000 room/sec can go above 100,000 room/sec when adding room 
 
 from Room import Room
 
@@ -24,8 +23,6 @@ class Hotel:
 
     #Set Guest format
     def add_room(self, channels):
-        # channel_amount = len(channels) + int(self.have_room())
-        
         if self.have_room():
             self.tree.update()
 
@@ -41,6 +38,7 @@ class Hotel:
                 for j in range(1, amount + 1):
                     v = index + 1
                     n = Formula.triangular_accumulate(j, v)
+
                     #ชื่อช่องทาง_ลำดับของช่องทาง_ลำดับของคน_ลำดับของครั้งที่ใช้ function นี้ 
                     self.tree.add(Room(f"{channel_name}_{v}_{j}_{self.last_group}", n))
                     pbar.update(1)
@@ -55,10 +53,8 @@ class Hotel:
         
         if self.have_room():
             self.tree.update()
-        
+            
         for index in range(1, count + 1):
-            # v = 2
-            # n = ((v + j) * (j + v - 1)) // 2 + j
             n = Formula.triangular_accumulate(index,1)
             self.tree.add(Room(f"manual", n))
         return

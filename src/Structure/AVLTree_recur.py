@@ -24,11 +24,9 @@ class AVLNode:
 class AVLTree:
     def __init__(self):
         self.root = None
-        self.size = 0
 
     def add(self, data):
         self.root = self._add(self.root, data)
-        self.size -= 1
 
     def _add(self, root, data):
         if root is None:
@@ -95,7 +93,6 @@ class AVLTree:
     
     def remove(self, data):
         self.root = self._remove(self.root, data)
-        self.size -= 1
 
     def _remove(self, node, data):
         if node is None:
