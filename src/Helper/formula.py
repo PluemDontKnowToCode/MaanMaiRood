@@ -8,8 +8,8 @@ class Formula:
             n_new = ((value + number) * (value + number - 1)) // 2 + number
 
         Args:
-            number (int): The current number (e.g., focus.data.number)
-            value (int): The input increment value
+            number (int): The current number (e.g., focus.data.number) -> ลำดับคน
+            value (int): The input increment value -> ลำดับของรถ
 
         Returns:
             int: The updated number
