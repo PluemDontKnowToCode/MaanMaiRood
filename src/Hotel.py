@@ -41,7 +41,8 @@ class Hotel:
                 for j in range(1, amount + 1):
                     v = index + 1
                     n = Formula.triangular_accumulate(j, v)
-                    self.tree.add(Room(f"{channel_name}_{index + 1}_{j+1}_{self.last_group}", n))
+                    #ชื่อช่องทาง_ลำดับของช่องทาง_ลำดับของคน_ลำดับของครั้งที่ใช้ function นี้ 
+                    self.tree.add(Room(f"{channel_name}_{v}_{j}_{self.last_group}", n))
                     pbar.update(1)
         
         return
